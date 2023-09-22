@@ -1,31 +1,35 @@
 #!/usr/bin/env python3
-""" A simple flask app that serves an html page """
+"""
+Basic Babel setup
+"""
 
-
-from flask import Flask, render_template
+import babel
+from flask import Flask, render_template, request
 from flask_babel import Babel
 
-
-class Config(object):
-    """languages"""
-
-    LANGUAGES = ["en", "fr"]
-    BABEL_DEFAULT_LOCALE = "en"
-    BABEL_DEFAULT_TIMEZONE = "UTC"
-
-
 app = Flask(__name__)
-app.config.from_object(Config)
 babel = Babel(app)
 
 
-@app.route('/')
-def home():
-    """ Home route that serves the
-    landing page """
+class Config:
+    """
+    Config class
+    """
+    LANGUAGES = ['en', 'fr']
+    BABEL_DEFAULT_LOCALE = 'en'
+    BABEL_DEFAULT_TIMEZONE = 'UTC'
 
-    return render_template("1-index.html")
+
+app.config.from_object(Config)
 
 
-if __name__ == "__main__":
-    app.run(port=5000, host="0.0.0.0", debug=True)
+@app.route('/', methods=['GET'], strict_slashes=False)
+def index():
+    """
+    hello world
+    """
+    return render_template('1-index.html')
+
+
+if __name__ == '__main__':
+    app.run(debug=True)
